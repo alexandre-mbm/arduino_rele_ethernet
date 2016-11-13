@@ -2,8 +2,8 @@
 #include <Ethernet.h>
 
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x00, 0x9B, 0x36 }; //MAC ADRESS UNIVERSAL PARA PLACAS GENÉRICAS
-byte ip[] = { 192, 168, 1, 99 }; // ENDEREÇO DE IP - DEFINIDO PELO USUÁRIO
-byte gateway[] = { 192, 168, 1, 1 }; // ENDEREÇO GATEWAY DO ROTEADOR
+byte ip[] = { 192, 168, 10, 99 }; // ENDEREÇO DE IP - DEFINIDO PELO USUÁRIO
+byte gateway[] = { 192, 168, 10, 1 }; // ENDEREÇO GATEWAY DO ROTEADOR
 byte subnet[] = { 255, 255, 255, 0 }; //SUBMASCARA DO ROTEADOR
 EthernetServer server(8081); //PORTA QUE SERÁ ABERTA
 
@@ -40,7 +40,7 @@ void setup() {
   Ethernet.begin(mac, ip, gateway, subnet); //COMEÇAR O ETHERNET SHIELD, COM OS DADOS ACIMA
   server.begin(); //COMECAR O WEBSERVER
   Serial.begin(9600);  //HABILITAR O SERIAL
-  Serial.println("Arduino + Ethernet Shield + Relês"); //IMPRIMIR NO SERIAL
+  Serial.println("Arduino + Ethernet Shield + Relês V2.0"); //IMPRIMIR NO SERIAL
 }
 
 void loop() {
@@ -99,10 +99,13 @@ void loop() {
 
           }
 
+
+
           //clearing string for next read
           readString = "";
 
-          ////// PAGINA HTML ///////
+
+          /////////////// PAGINA HTML //////////////////////////
 
           client.println("HTTP/1.1 200 OK"); //send new page
           client.println("Content-Type: text/html");
@@ -111,8 +114,10 @@ void loop() {
           client.println("<html>");
           client.println("<head>");
           client.println("<title>Arduino + Ethernet Shield + Relê</title>");
-          client.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>");
+          client.println("<meta charset=utf-8'>");
           client.println("<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'>");
+          client.println("<meta name='apple-mobile-web-app-capable' content='yes' />");
+          client.println("<meta name='apple-mobile-web-app-status-bar-style' content='white'>");
           client.println("<link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
           client.println("<link rel='icon' href='http://www.blocodochapolin.com.br/arduino_rele/img/icone.png' type='image/x-icon' />");
           client.println("<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
@@ -120,9 +125,9 @@ void loop() {
           client.println("<script type='text/javascript' src='http://www.blocodochapolin.com.br/arduino/rele_internet_2_reles_get/2reles_get.js'></script>");
           client.println("</head>");
           client.println("<body>");
-          client.println("<div class='container-fluid' align='center'>");
-          client.println("<h3>Arduino + Ethernet Shield + Relês</h3>");
-          client.println("<hr>");
+          client.println("<div id='container' align='center'>");
+          client.println("<h2>Arduino + Ethernet Shield + Relês v2.0</h2>");
+          client.println("<hr><br>");
           for (int i = 0; i <= 1; i++) {
             client.print("<div id='porta");
             client.print(i + 2);
@@ -152,5 +157,4 @@ void loop() {
     }
   }
 }
-
 
